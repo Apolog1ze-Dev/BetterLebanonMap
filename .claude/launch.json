@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "viewer",
+      "runtimeExecutable": "uv",
+      "runtimeArgs": ["run", "python", "-m", "better_lebanon_map.serve", "8765"],
+      "port": 8765
+    },
+    {
+      "name": "published-site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8766", "--bind", "127.0.0.1", "--directory", "data"],
+      "port": 8766
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+key	answer	certainty	dists	candidates	note
+w985121747	B	c	71/79/130/174	A Rue des Chênes / B Rue Broumana / C Impasse des Aubépines / D Impasse des Chênes 110	driveway to Rue Broumana, drawn in data/corrections/access.geojson
+w464784626	AB	p	228/228	A Rue des Roses / B Rue des Cyclamens	both streets end at one point; farm tracks lead there
+w1044602516	?	u	216/235	A Rue des Rossignols / B Impasse de la Mer 4721	greenhouse maze
+w1357547900	?	u	151/168/223/228	A Rue de l'Affection / B Rue de la Fraternité / C Rue des Cigognes / D Rue des Mouettes	dirt tracks to A and B
+w961936403	A	p	187/194	A Impasse de Kfar Selouane 530 / B Rue des Narcisses	track from A's end passes just above the house
+w1135243526	AB	p	151/158	A Route des Chênes / B Route de Fourzol	A and B meet at one junction
+w1149965296	A	c	153/164/222/223	A Rue des Tournesols / B Rue du Basilic / C Rue du Thym / D Rue des Narcisses	track from A passes by the house
+w929417854	A	u	170/194	A Route des Cèdres / B Impasse des Cèdres 1065	
+w1360894591	AB	p	212/217	A Route de Mazraat Chalbaal / B Rue des Tourterelles	A and B at one point; terrace path arcs there
+w1043269615	A	u	166/191/191/207	A Rue des Figuiers / B Rue des Pins / C None / D Route de Baassir	
+w466823912	A	p	161/164/216	A Route de Qaa Jouar Maqiyé / B None / C Rue des Lauriers	farm track to the main road A (B is a spur on the far side)
+w924027648	B	p	173/180/185/218	A Impasse des Lauriers / B Route d'Hokr Ed-Dahri / C None / D None	camp strip runs down to B
+w914097737	A	p	193/201/247	A Rue des Grenadiers / B Route de Zahlé / C Impasse de Dalhamiye 108	diagonal field track to A
+w927400990	?	u	158/193/230/230	A Rue des Caroubiers / B Route des Chênes / C Rue des Pins / D Rue des Grenadiers	
+w737672450	A	u	154/167/232/246	A Rue des Colombes / B Rue des Tourterelles / C Rue des Guêpiers / D Rue des Moineaux	
+w914059899	?	u	176/212/234	A Impasse de Sirius 110 / B Rue des Citronniers / C Route de Sirius	
+w928686840	B	p	186/186	A Impasse des Cèdres 1396 / B Route des Cèdres	dirt road from B's junction to the greenhouse block
+w1156594329	AC	u	196/201/202	A Route du Soleil / B Route des Cèdres / C Route de Fourzol	track to the road where A becomes C
+w1066153061	A	p	206/247	A Route des Chênes / B Rue des Saules	track west to the road at the left
+w923895136	AC	u	174/174/209	A Route de Mqaiteaa / B Rue des Oliviers / C Route de la Mer	
+w928990545	AB	p	160/160	A Route de la Mer / B None	hamlet road meets the main road where the spur B starts
+w1180947910	A	p	87/129	A Route de Tarchich / B Rue des Grenadiers	track down to A
+w1350333591	A	c	86/146/162/180	A Rue de Sirius / B Rue des Gardiens du Pôle / C Route des Cèdres / D Impasse de Meiss Ej-Jabal 1071	dirt road from A passes by the house
+w941585262	?	u	102/113/140/164	A Impasse Abou Dib 1 / B Impasse du Crépuscule 55 / C Rue du Crépuscule / D Rue des Wakfs	dense old town, alleys not mapped
+w1344541106	A	p	93/96/132	A Route de Mazraat Mechref / B Rue des Roses / C Rue des Lys	compound driveway to A just past B's junction
+w1501206071	?	u	132/132/159/161	A Rue des Orangers / B Rue de la Pluie / C Rue de la Brise / D Rue des Peupliers	
+w934923410	A	c	99/186	A Rue des Grenadiers / B Impasse des Grenadiers 389	dirt road continues from A's end past the house
+w1286624413	A	u	131/143/176/245	A Impasse El Bqaïaa 3490 / B Rue des Noyers / C Impasse des Noyers 1 / D Impasse des Peupliers	
+w912583692	?	u	132/162/162/216	A Rue du Thym / B Rue des Iris / C Rue des Tulipes / D Rue des Cyclamens	
+w927502901	?	u	86/86/104/115	A Rue des Orangers / B Rue des Citronniers / C Route de Rihaniyet-Miniyeh / D Rue des Cerisiers	greenhouse maze
+w927370409	A	p	81/82/120/140	A Rue des Bougainvilliers / B Route d'Hrar / C Rue des Violettes / D Impasse d'Hrar 2923	A's end is closest, track toward the house
+w1155604354	B	u	112/140/171/178	A Impasse de la Sauge 179 / B Impasse des Roses 595 / C Rue de la Sauge / D Rue des Roses	inside a compound whose yard opens on B (A is a spur toward its north side)
+w1361497108	B	c	93/98	A Route des Chardonnerets / B Route de la Galaxie	dirt road from the house east to B (A is nearer)
+w926197603	A	p	149/195	A Route des Caroubiers / B Route de Tall Sebaal	farm track along the field edge to A
+w1042764693	A	p	85/99/114/125	A Rue des Grenadiers / B Rue du Thym / C None / D Rue des Saules	track north to A's end
+w466714383	A	c	85/146/208	A Route de Qaa / B Rue de la Fleur de Citronnier / C Route de Qaa	farm compound right off A
+w1176631036	A	p	115/137/137/153	A Route de Taanayel / B Rue des Chardonnerets / C None / D Impasse de Taanayel 887	industrial yard opens on A
+w1370009797	?	u	94/99/105/106	A Route du Jasmin / B Impasse du Jasmin 849 / C Rue des Saules / D Rue des Abricotiers	four roads meet in one cluster below the house
+w1159449765	?	u	96/98/100/123	A Rue des Noyers / B Route des Lys / C Impasse des Lys 1312 / D Impasse des Lys 1210	
+w914059952	A	p	144/166/200	A Route de Sirius / B Impasse de Sirius 110 / C Rue des Citronniers	camp's south-east entrance on A
+w1452928440	?	u	98/102/123/151	A Rue des Chênes / B Passage de la Mer 725 / C Route de la Mer / D Rue des Pins	old souk, alleys not mapped
+w1149964634	A	c	74/164/170/174	A Rue des Figuiers / B Route des Chênes / C Rue des Abricotiers / D Rue des Sycomores	compound right off A
+w1342665067	AB	p	65/68/126/135	A Route des Chênes / B Rue des Mouettes / C Rue des Citronniers / D Rue des Alouettes	path down to the A/B junction
+w935013899	A	p	56/85	A Route de Charbine / B Impasse de Charbine 283	
+w950132755	AB	p	70/87/98	A Rue des Pins / B Rue des Oliviers / C Rue des Sycomores	
+w867404755	AB	u	47/54/97/113	A Impasse des Genévriers / B Rue des Citronniers / C Impasse des Cèdres 1109 / D Rue des Pins	
+w1343726938	B	p	73/81/120/146	A Impasse des Amandiers 118-73 / B Rue des Cèdres / C Rue des Grenadiers / D Rue des Amandiers	path down to B
+w1034459558	?	u	64/78/101/101	A Rue des Grenadiers / B Impasse des Cyprès 306 / C Route de Qoubber Chamra / D Impasse des Cyprès 174	
+w838197738	A	p	49/63/65/90	A Rue des Chênes / B Rue du Jasmin / C Impasse des Chênes 178 / D None	open yard east to A
+w996809807	A	p	74/78/91/100	A Route d'Aamayer / B Impasse d'Aamayer 1117 / C Impasse d'Aamayer 1145 / D Route des Cèdres	farm track south to A
+w754421487	A	u	50/51/60/88	A Rue des Platanes / B Rue des Étourneaux / C Rue des Pommiers / D Rue des Mouettes	
+w1349003249	A	p	42/92/97	A Rue de la Lavande / B Impasse de Barich 287 / C Rue des Roses	A's loop ends just below the house
+w1350510427	A	p	63/110/138	A Impasse d'Aain Ibl 420 / B Rue des Roses / C Impasse des Roses 915	
+w1335020966	A	p	69/120/120	A Impasse des Oliviers 422 / B Rue des Oliviers / C Rue des Saules	track from A's end
+w926451415	A	p	43/54/80/98	A Rue des Cyclamens / B Rue du Jasmin / C Rue des Bougainvilliers / D Rue des Anémones	lane between greenhouses north to A
+w743134691	A	p	50/56/91/123	A Route de Baflay / B Rue du Soleil / C Impasse de Baflay 1020 / D Rue des Pléiades	villa driveway to A
+w766349197	A	p	41/52/64/68	A Rue des Oliviers / B Impasse des Myrtes / C Impasse des Abricotiers 255 / D Impasse des Pêchers	
+w1328541470	A	c	40/60	A Route d'Iskandarouna / B Impasse d'Iskandarouna 208	warehouse yard opens on A
+w1154758626	A	p	46/64/85/102	A Rue des Rossignols / B Rue des Alouettes / C Rue des Étourneaux / D Rue des Cigognes	
+w1042777538	?	u	64/82/92/96	A Route de Rumayla / B Rue des Figuiers / C Route des Cèdres / D Impasse des Cèdres 1654	track between greenhouses links B and C
+w953990914	BC	p	63/83/83/86	A Impasse des Iris 139-70 / B Impasse de Majdal 2-2 / C Passage de Majdal 2 / D Impasse des Térébinthes	path south to where B and C meet
+w1343186137	?	u	25/32/41/43	A Rue de l'Aurore / B Rue de Véga / C Route de Tyr / D Rue du Rubis	dense block between A and C
+w938903523	A	p	34/42/64	A Rue des Vergers / B Passage du Verre 268 / C Rue du Verre	
+w743162810	AB	p	33/45	A Rue des Cèdres / B Rue des Cyprès	lane meets A at B's junction
+w1034390890	A	c	24/41	A Rue des Tourterelles / B Rue des Peupliers	driveway south to A
+w1339492960	A	p	34/79/84	A Route des Chardonnerets / B None / C Rue des Faucons	
+w1159412933	AB	p	21/24	A Impasse des Bulbuls 271 / B Rue des Bulbuls	
+w965590194	A	p	25/59	A Route de Deir El Harf / B Impasse des Térébinthes	
+w1362027672	A	p	29/32	A Impasse des Iris 414 / B Rue des Iris	
+w840814661	A	p	38/51/72/77	A Chemin des Oliviers / B Impasse des Rossignols 161 / C Chemin des Cèdres / D Chemin des Pommiers	A's alley ends just below the house
+w1156596981	?	u	24/28/36	A Rue des Iris / B Route de Zahlé / C Autoroute Internationale Beyrouth-Damas	
+w749112040	A	p	25/41/59	A Rue des Chênes / B Rue des Oliviers / C Rue des Marguerites	driveway east to A
+w955626016	A	u	26/31/39/48	A Rue des Noyers / B Rue des Cerisiers / C Rue des Platanes / D Rue des Abricotiers	
+w1339050603	A	p	30/39/58/59	A Impasse des Iris 522 / B Rue des Iris / C Rue des Gardénias / D Impasse des Gardénias 104	A's dead end reaches the house's yard
+w842127066	A	p	36/77/79	A Impasse des Lauriers 85 / B Rue des Lauriers / C Impasse des Amandiers 65	A's alley ends just above the house (camp)
+w1352005204	A	p	28/33/34/70	A Rue des Cèdres / B Impasse des Chênes 1083 / C Rue des Pins / D Rue des Chênes	
+w735360596	A	p	28/45	A Route des Cèdres / B Rue des Chardonnerets	stairs down to A
+w837973188	?	u	34/43/46/64	A Rue des Genévriers / B Rue des Chênes / C Rue des Pins / D Rue des Oliviers	dense block
+w1335307816	A	p	24/25	A Route de Jouaiya / B Rue du Jasmin	
+w1346869189	A	p	21/32/46	A Rue des Cyclamens / B Rue des Oliviers / C Rue des Lys	paved yard opens on A
+w1032384999	A	p	30/52/68	A Route d'Aain El Ghouaybeh / B Impasse d'Aain El Ghouaybeh 372 / C Impasse des Cèdres 195	lane up to A

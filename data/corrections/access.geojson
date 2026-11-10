@@ -1,0 +1,16 @@
+{
+  "type": "FeatureCollection",
+  "name": "access",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "note": "Driveway from Rue Broumana (Jouret Ballout) to the house at OSM way 985121747, not in OSM; the house has no access to Rue des Chênes. Drawn by someone who knows the place, 2026-10-31."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[35.6271561, 33.8949916], [35.6274932, 33.8954225], [35.6276457, 33.8955224]]
+      }
+    }
+  ]
+}

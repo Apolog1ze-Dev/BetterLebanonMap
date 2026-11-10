@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1F4AA8">
+<title>Better Lebanon Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="app.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body data-view="home">
+<div id="map" aria-label="Map"></div>
+
+<!-- On a desktop the bar and the sheet are one floating card; on a phone the bar floats at the top
+     and the sheet slides up from the bottom. data-view on <body>: home | card | directions. -->
+<div id="panel">
+  <header id="bar">
+    <div class="brand-row">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3c-5 0-9 4-9 9 0 7 9 17 9 17s9-10 9-17c0-5-4-9-9-9Z"/><path class="cedar" d="M16 7l-4 6h2.5l-3 4H14l-2.5 3.5h9L18 17h2.5l-3-4H20Z"/></svg>
+      <span class="brand-name" data-t="title"></span>
+      <div class="langs" role="group" data-ta="language">
+        <button type="button" data-lang="en">EN</button><button type="button" data-lang="fr">FR</button><button type="button" data-lang="ar" lang="ar">ع</button>
+      </div>
+    </div>
+    <div class="hero">
+      <h1 data-t="home_title"></h1>
+      <p data-t="home_sub"></p>
+    </div>
+
+    <div class="searchbox">
+      <button type="button" class="bar-btn" id="back" data-tt="back"><svg class="ic flip" viewBox="0 0 24 24"><path d="M19 12H5m0 0 6-6m-6 6 6 6"/></svg></button>
+      <svg class="logo mini" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3c-5 0-9 4-9 9 0 7 9 17 9 17s9-10 9-17c0-5-4-9-9-9Z"/><path class="cedar" d="M16 7l-4 6h2.5l-3 4H14l-2.5 3.5h9L18 17h2.5l-3-4H20Z"/></svg>
+      <svg class="ic search-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+      <input id="q" type="search" autocomplete="off" spellcheck="false" enterkeyhint="search" data-tp="search_ph" data-ta="search_ph" role="combobox" aria-controls="results">
+      <button type="button" class="bar-btn" id="clear" data-tt="clear" hidden><svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      <button type="button" class="lang-cycle" id="lang-cycle" data-tt="language"></button>
+    </div>
+    <ul id="results" class="results" role="listbox" hidden></ul>
+
+    <div class="dir-head">
+      <button type="button" class="bar-btn" id="dir-back" data-tt="back"><svg class="ic flip" viewBox="0 0 24 24"><path d="M19 12H5m0 0 6-6m-6 6 6 6"/></svg></button>
+      <h2 data-t="tile_dir"></h2>
+      <button type="button" class="bar-btn" id="clear-route" data-tt="clear"><svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+  </header>
+
+  <div id="sheet">
+    <button type="button" id="grab" data-tt="sheet_toggle"><span></span></button>
+    <div class="scroll">
+      <section id="view-explore"><div id="card"></div></section>
+
+      <section id="view-directions" hidden>
+        <div class="seg" role="group">
+          <button type="button" data-mode="car" class="on"><svg class="ic" viewBox="0 0 24 24"><path d="M5 16v-4l2-5h10l2 5v4M4 16h16M6 16v2.500M18 16v2.500M8 12.500h.010M16 12.500h.010"/></svg><span data-t="car"></span><span class="eta" id="eta-car"></span></button>
+          <button type="button" data-mode="foot"><svg class="ic" viewBox="0 0 24 24"><circle cx="13" cy="4.500" r="1.700"/><path d="M10 21l2.200-6.500L15 17v4M12.200 14.500 11 9.500l4 2 2 2.500M11 9.500 8 12v3"/></svg><span data-t="foot"></span><span class="eta" id="eta-foot"></span></button>
+        </div>
+        <div class="route-form">
+          <div class="fields">
+            <div class="field">
+              <span class="dot dot-a">A</span>
+              <input id="from" type="search" autocomplete="off" spellcheck="false" data-tp="from_ph" data-ta="from_ph">
+              <button type="button" class="bar-btn" data-pick="from" data-tt="pick"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21Z"/><circle cx="12" cy="9.500" r="2.500"/></svg></button>
+              <ul class="results over" hidden></ul>
+            </div>
+            <div class="field">
+              <span class="dot dot-b">B</span>
+              <input id="to" type="search" autocomplete="off" spellcheck="false" data-tp="to_ph" data-ta="to_ph">
+              <button type="button" class="bar-btn" data-pick="to" data-tt="pick"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21Z"/><circle cx="12" cy="9.500" r="2.500"/></svg></button>
+              <ul class="results over" hidden></ul>
+            </div>
+          </div>
+          <button type="button" class="round-btn" id="swap" data-tt="swap"><svg class="ic" viewBox="0 0 24 24"><path d="M8 4v16m0 0-3-3m3 3 3-3M16 20V4m0 0-3 3m3-3 3 3"/></svg></button>
+        </div>
+        <button type="button" class="text-btn" id="locate"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.200"/><path d="M12 2.500v3M12 18.500v3M2.500 12h3M18.500 12h3"/></svg><span data-t="dir_use_me"></span></button>
+        <div id="route-out"></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div id="controls">
+  <button type="button" class="ctl" id="style-btn" data-tt="map_style" aria-expanded="false" aria-controls="style-pop"><svg class="ic" viewBox="0 0 24 24"><path d="M12 4 3 9l9 5 9-5-9-5Z"/><path d="m3 14 9 5 9-5"/></svg></button>
+  <button type="button" class="ctl accent" id="show-me" data-tt="show_me"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.200"/><path d="M12 2.500v3M12 18.500v3M2.500 12h3M18.500 12h3"/></svg></button>
+  <div class="zoom">
+    <button type="button" class="ctl" id="zoom-in" data-tt="zoom_in"><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+    <button type="button" class="ctl" id="zoom-out" data-tt="zoom_out"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+  </div>
+</div>
+
+<div id="style-pop" hidden>
+  <div class="pop-title" data-t="base_map"></div>
+  <div class="bases">
+    <label><input type="radio" name="base" value="plain" checked><span data-t="base_light"></span></label>
+    <label><input type="radio" name="base" value="osm"><span>OpenStreetMap</span></label>
+    <label><input type="radio" name="base" value="light"><span data-t="base_gray"></span></label>
+    <label><input type="radio" name="base" value="terrain"><span data-t="base_terrain"></span></label>
+    <label><input type="radio" name="base" value="sat"><span data-t="base_sat"></span></label>
+  </div>
+  <div class="pop-title" data-t="show_on_map"></div>
+  <div class="layer-grid">
+    <label><input type="checkbox" data-layer="buildings" checked><span data-t="buildings"></span></label>
+    <label><input type="checkbox" data-layer="numbers" checked><span data-t="numbers"></span></label>
+    <label><input type="checkbox" data-layer="boundaries" checked><span data-t="boundaries"></span></label>
+    <label><input type="checkbox" data-layer="labels" checked><span data-t="labels"></span></label>
+    <label class="wide"><input type="checkbox" id="by-source"><span data-t="color_by_source"></span></label>
+  </div>
+  <details class="legend-box">
+    <summary data-t="legend"></summary>
+    <ul class="legend">
+      <li><b class="chip odd">137</b><span data-t="legend_odd"></span></li>
+      <li><b class="chip even">142</b><span data-t="legend_even"></span></li>
+      <li><i class="line solid"></i><span data-t="legend_osm_border"></span></li>
+      <li><i class="area contested"></i><span data-t="legend_est_border"></span></li>
+      <li class="src"><i style="background:#3b4350"></i><span data-t="legend_osm"></span></li>
+      <li class="src"><i style="background:#0f7f8c"></i><span data-t="legend_destination"></span></li>
+      <li class="src"><i style="background:#8a3ffc"></i><span data-t="legend_landmark"></span></li>
+      <li class="src"><i style="background:#c2185b"></i><span data-t="legend_place"></span></li>
+      <li class="src"><i style="background:#2e9d4f"></i><span data-t="legend_theme"></span></li>
+      <li class="src"><i style="background:#3f7fd6"></i><span data-t="legend_branch"></span></li>
+      <li class="src"><i style="background:#d96c00"></i><span data-t="legend_systematic"></span></li>
+    </ul>
+  </details>
+</div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
