@@ -4,6 +4,8 @@
 
 **Une expérience : organiser la carte du Liban pour que chacun puisse s'y repérer par adresse.**
 
+**Ouvrir la carte : https://apolog1ze-dev.github.io/BetterLebanonMap/**
+
 Dans la plus grande partie du Liban, les rues n'ont pas de nom en usage et les bâtiments n'ont pas
 de numéro. On s'oriente donc par repères : « après la pharmacie, deuxième immeuble à gauche ». Ce
 projet essaie de montrer à quoi ressemblerait un système d'adresses complet. Il part des données

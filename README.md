@@ -4,6 +4,8 @@
 
 **An experiment in organising the map of Lebanon so that people can find their way by address.**
 
+**Open the map: https://apolog1ze-dev.github.io/BetterLebanonMap/**
+
 In most of Lebanon streets have no name in use and buildings have no number, so people give
 directions by landmarks: "after the pharmacy, second building on the left". This project tries out
 what a complete address system could look like. It takes the OpenStreetMap data for Lebanon and
