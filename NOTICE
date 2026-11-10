@@ -1,0 +1,13 @@
+Better Lebanon Map
+Copyright 2026 Karim Dagher
+
+This product was created by Karim Dagher. It is licensed under the Apache
+License, Version 2.0 (see the LICENSE file). If you redistribute it, or a work
+derived from it, you must keep this NOTICE file with the attribution above.
+
+The licence covers the software. The map data it produces is derived from:
+  - OpenStreetMap, (c) OpenStreetMap contributors, Open Database License;
+  - Microsoft RoadDetections, Open Database License;
+  - OCHA COD-AB Lebanon boundaries, CC BY-IGO;
+and the addresses and street names derived from them are available under the
+Open Database License.
