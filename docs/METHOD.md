@@ -58,8 +58,9 @@ Inputs:
 ## The viewer
 
 The map fills the page. On a desktop a floating card holds the search box and whatever is
-selected; on a phone the search box floats at the top and the card is a sheet that slides up from
-the bottom. Arabic (right-to-left), French and English; light and dark.
+selected; on a phone the search box floats at the top and the card is a drawer at the bottom, dragged
+by its handle or its content between three rests (folded, half open, fully open). Arabic
+(right-to-left), French and English, chosen from a menu on a phone; light and dark.
 
 - **Home** a search box, "My address" (the address of where you are) and "Directions", three
   searches to try, and one sentence on how the numbers work, with the rest behind "How addresses
@@ -182,7 +183,8 @@ uv run python -I -m better_lebanon_map.publish --repo owner/name --push   # push
 1. Create the repository on GitHub (public: Pages is free for public repositories).
 2. Run the command with `--push`. It needs `git` signed in to GitHub (`--remote` takes an SSH URL).
    The site goes up as one commit that replaces the one before, so the repository does not grow
-   with every build.
+   with every build; `data/site` keeps its own `.git`, so a later push uploads only the files that
+   changed.
 3. Once, in the repository's Settings > Pages: deploy from the branch `gh-pages`, folder `/`. The
    map is then at `https://owner.github.io/name/`; publish again after each rebuild.
 

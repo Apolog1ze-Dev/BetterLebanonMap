@@ -68,7 +68,7 @@ function applyTexts() {
     b.classList.toggle("on", b.dataset.lang === lang());
     b.setAttribute("aria-pressed", b.dataset.lang === lang());
   });
-  $("#lang-cycle").textContent = { en: "EN", fr: "FR", ar: "ع" }[lang()];
+  $("#lang-btn span").textContent = { en: "EN", fr: "FR", ar: "ع" }[lang()];
   document.title = t("title");
 }
 
@@ -104,6 +104,7 @@ function show(render, home = false) {
     $("#q").value = selectedLabel();
     $("#clear").hidden = false;
   }
+  if (sheetRest === "full") sheetRest = "half";   // a new card starts half open, the map in view
   setView(home ? "home" : "card");
   $(".scroll").scrollTop = 0;
 }
@@ -764,23 +765,96 @@ function setLanguage(l) {
   syncInsets();
   updateHash();
 }
-document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => setLanguage(b.dataset.lang)));
-$("#lang-cycle").addEventListener("click", () => setLanguage({ en: "fr", fr: "ar", ar: "en" }[lang()]));
+// On a phone the languages are a menu under the bar's language button.
+const langMenu = $("#lang-menu"), langBtn = $("#lang-btn");
+const setLangMenu = open => { langMenu.hidden = !open; langBtn.setAttribute("aria-expanded", open); };
+langBtn.addEventListener("click", () => setLangMenu(langMenu.hidden));
+document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => { setLangMenu(false); setLanguage(b.dataset.lang); }));
+document.addEventListener("pointerdown", e => {
+  if (!langMenu.hidden && !langMenu.contains(e.target) && !langBtn.contains(e.target)) setLangMenu(false);
+});
 
-// ---------- the sheet, and what of the map the interface hides ----------
+// ---------- the drawer, and what of the map the interface hides ----------
+// On a phone the sheet is a drawer with three rests: "closed" (folded to a peek), "half" (about half
+// the screen, the map still in view) and "full" (as tall as its content, up to the search bar). It
+// is dragged by its handle, or by its content from the top; a tap on the handle folds or unfolds it.
 const isPhone = () => window.matchMedia("(max-width: 720px)").matches;
-function syncInsets() {
-  const phone = isPhone(), body = document.body;
+const sheet = $("#sheet"), scroller = $(".scroll");
+let sheetRest = "half", sheetY = 0, drag = null;
+
+// How far down each rest pushes the sheet, in pixels.
+function sheetRests() {
+  const h = sheet.offsetHeight;
   const peek = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--peek")) || 0;
-  const visible = !phone || body.classList.contains("searching") ? 0 : body.classList.contains("panel-closed") ? peek : $("#sheet").offsetHeight;
+  return { full: 0, half: Math.max(0, h - Math.round(window.innerHeight * 0.56)), closed: Math.max(0, h - peek) };
+}
+
+function placeSheet(y = sheetRests()[sheetRest]) {
+  sheetY = isPhone() ? y : 0;
+  sheet.style.transform = isPhone() ? `translateY(${sheetY}px)` : "";
+}
+
+function syncInsets() {
+  const phone = isPhone();
+  if (!drag) placeSheet();
+  const visible = !phone || document.body.classList.contains("searching") ? 0 : Math.max(0, sheet.offsetHeight - sheetY);
   mv.insets.bottom = visible;
   mv.insets.top = phone ? $("#bar").offsetHeight + 24 : 0;
   mv.insets.start = phone ? 0 : $("#panel").offsetWidth + 16;
   document.documentElement.style.setProperty("--sheet-visible", `${visible}px`);
 }
-function openPanel() { document.body.classList.remove("panel-closed"); syncInsets(); }
-function closePanel() { document.body.classList.add("panel-closed"); syncInsets(); }
-$("#grab").addEventListener("click", () => { document.body.classList.toggle("panel-closed"); syncInsets(); });
+function openPanel() { if (sheetRest === "closed") sheetRest = "half"; syncInsets(); }
+function closePanel() { sheetRest = "closed"; syncInsets(); }
+
+function dragStart(y) {
+  drag = { from: y, y0: sheetY, moved: false, last: y, speed: 0 };
+  sheet.classList.add("dragging");
+}
+function dragMove(y) {
+  if (Math.abs(y - drag.from) > 5) drag.moved = true;
+  drag.speed = y - drag.last;
+  drag.last = y;
+  placeSheet(Math.max(0, Math.min(sheetRests().closed, drag.y0 + y - drag.from)));
+}
+// Let go: the sheet settles at the nearest rest, or the next one in the direction of a flick.
+function dragEnd() {
+  const rests = sheetRests(), { moved, speed } = drag;
+  drag = null;
+  sheet.classList.remove("dragging");
+  if (!moved) sheetRest = sheetRest === "closed" ? "half" : "closed";   // a tap
+  else {
+    const aim = sheetY + speed * 12;
+    sheetRest = Object.keys(rests).reduce((a, b) => (Math.abs(rests[b] - aim) < Math.abs(rests[a] - aim) ? b : a));
+  }
+  syncInsets();
+}
+
+const grab = $("#grab");
+grab.addEventListener("pointerdown", e => { grab.setPointerCapture(e.pointerId); dragStart(e.clientY); });
+grab.addEventListener("pointermove", e => { if (drag) dragMove(e.clientY); });
+grab.addEventListener("pointerup", () => { if (drag) dragEnd(); });
+grab.addEventListener("pointercancel", () => { if (drag) dragEnd(); });
+grab.addEventListener("keydown", e => {   // the handle is a button: Enter or Space folds and unfolds
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); sheetRest = sheetRest === "closed" ? "half" : "closed"; syncInsets(); }
+});
+
+// The content drags the drawer too: pulled down while scrolled to its top, or pulled up while the
+// drawer is not fully open. Otherwise the touch scrolls the content as usual.
+let touchFrom = null, touchTakes = null;
+scroller.addEventListener("touchstart", e => { touchFrom = e.touches[0].clientY; touchTakes = null; }, { passive: true });
+scroller.addEventListener("touchmove", e => {
+  if (!isPhone() || touchFrom === null) return;
+  const y = e.touches[0].clientY, dy = y - touchFrom;
+  if (touchTakes === null && Math.abs(dy) > 6) {
+    touchTakes = (dy > 0 && scroller.scrollTop <= 0) || (dy < 0 && sheetY > 0);
+    if (touchTakes) dragStart(touchFrom);
+  }
+  if (touchTakes) { e.preventDefault(); dragMove(y); }
+}, { passive: false });
+const touchDone = () => { if (touchTakes && drag) dragEnd(); touchFrom = touchTakes = null; };
+scroller.addEventListener("touchend", touchDone);
+scroller.addEventListener("touchcancel", touchDone);
+
 window.addEventListener("resize", syncInsets);
 card.addEventListener("toggle", syncInsets, true);   // a <details> opening changes the sheet's height
 
@@ -830,7 +904,7 @@ async function restoreHash(hash = initialHash) {
 }
 
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") setStyleOpen(false);
+  if (e.key === "Escape") { setStyleOpen(false); setLangMenu(false); }
   if (e.key === "/" && !/^(INPUT|TEXTAREA)$/.test(document.activeElement?.tagName)) {
     e.preventDefault();
     if (document.body.dataset.view === "directions") $("#dir-back").click();

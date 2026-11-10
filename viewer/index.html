@@ -37,7 +37,12 @@
       <svg class="ic search-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
       <input id="q" type="search" autocomplete="off" spellcheck="false" enterkeyhint="search" data-tp="search_ph" data-ta="search_ph" role="combobox" aria-controls="results">
       <button type="button" class="bar-btn" id="clear" data-tt="clear" hidden><svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
-      <button type="button" class="lang-cycle" id="lang-cycle" data-tt="language"></button>
+      <button type="button" class="lang-btn" id="lang-btn" data-tt="language" aria-haspopup="true" aria-expanded="false" aria-controls="lang-menu"><span></span><svg class="ic" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+    </div>
+    <div id="lang-menu" role="group" data-ta="language" hidden>
+      <button type="button" data-lang="en" lang="en">English</button>
+      <button type="button" data-lang="fr" lang="fr">Français</button>
+      <button type="button" data-lang="ar" lang="ar">العربية</button>
     </div>
     <ul id="results" class="results" role="listbox" hidden></ul>
 

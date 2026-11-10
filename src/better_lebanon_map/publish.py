@@ -46,11 +46,15 @@ OCHA (COD-AB Lebanon, CC BY-IGO).
 
 
 def build(repo, site, esri_tiles):
-    """Copies the viewer to `site` with its site.json; returns (number of files, bytes, files too big)."""
+    """Copies the viewer to `site` with its site.json; returns (number of files, bytes, files too big).
+    The folder's own .git is kept: it is what lets the next push send only the files that changed."""
     if not (ROOT / "viewer/data/stats.json").exists():
         raise SystemExit("viewer/data is empty: run the pipeline first")
-    shutil.rmtree(site, ignore_errors=True)
-    shutil.copytree(ROOT / "viewer", site, ignore=shutil.ignore_patterns(*LOCAL_ONLY))
+    site.mkdir(parents=True, exist_ok=True)
+    for old in site.iterdir():
+        if old.name != ".git":
+            shutil.rmtree(old) if old.is_dir() else old.unlink()
+    shutil.copytree(ROOT / "viewer", site, ignore=shutil.ignore_patterns(*LOCAL_ONLY), dirs_exist_ok=True)
     built = date.today().isoformat()
     bases = ["plain", "osm", *(["light", "terrain", "sat"] if esri_tiles else [])]
     (site / "site.json").write_text(json.dumps({"repo": repo, "bases": bases, "built": built}))
@@ -59,16 +63,21 @@ def build(repo, site, esri_tiles):
     for name in ("LICENSE", "NOTICE"):   # the viewer's code is published too, under the same licence
         if (ROOT / name).exists():
             shutil.copy(ROOT / name, site / name)
-    sizes = {f: f.stat().st_size for f in site.rglob("*") if f.is_file()}
+    sizes = {f: f.stat().st_size for f in site.rglob("*") if f.is_file() and ".git" not in f.relative_to(site).parts}
     return len(sizes), sum(sizes.values()), [f for f, size in sizes.items() if size > MAX_FILE]
 
 
 def push(site, remote, message, author=None):
-    """One commit holding the site, pushed over the remote's gh-pages branch. author: "Name <email>"
-    to sign the commit with; else git's own identity, else the map's name."""
-    git = lambda *args: subprocess.run(["git", "-C", str(site), *args], check=True)
-    shutil.rmtree(site / ".git", ignore_errors=True)
-    git("init", "--quiet", "--initial-branch", "gh-pages")
+    """One commit holding the site, pushed over the remote's gh-pages branch: a commit with no
+    parent, so the branch only ever holds the latest build. author: "Name <email>" to sign the
+    commit with; else git's own identity, else the map's name."""
+    def git(*args, capture=False):
+        done = subprocess.run(["git", "-C", str(site), *args], check=True, text=True, capture_output=capture)
+        return done.stdout.strip() if capture else None
+
+    if not (site / ".git").exists():
+        git("init", "--quiet", "--initial-branch", "gh-pages")
+    git("remote", "set-url" if "origin" in git("remote", capture=True).split() else "add", "origin", remote)
     git("add", "--all")
     configured = lambda key: subprocess.run(["git", "-C", str(site), "config", key], capture_output=True).returncode == 0
     if author:
@@ -78,8 +87,10 @@ def push(site, remote, message, author=None):
         identity = []
     else:
         identity = ["-c", "user.name=Better Lebanon Map", "-c", "user.email=better-lebanon-map@users.noreply.github.com"]
-    git(*identity, "commit", "--quiet", "-m", message)
-    git("push", "--force", remote, "gh-pages")
+    commit = git(*identity, "commit-tree", git("write-tree", capture=True), "-m", message, capture=True)
+    git("update-ref", "refs/heads/gh-pages", commit)
+    git("symbolic-ref", "HEAD", "refs/heads/gh-pages")
+    git("push", "--force", "origin", "gh-pages")
 
 
 def main():

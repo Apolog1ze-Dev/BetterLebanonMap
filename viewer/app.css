@@ -76,7 +76,7 @@ body.picking #map, body.picking .leaflet-interactive { cursor: crosshair !import
 .bar-btn { width: 42px; height: 42px; border: 0; border-radius: 12px; background: none; color: var(--muted); display: grid; place-items: center; flex: none; }
 .bar-btn:hover { background: var(--bg-soft); color: var(--fg); }
 #back, #dir-back { color: var(--fg); }
-.lang-cycle { display: none; }
+.lang-btn, #lang-menu { display: none; }
 .dir-head { display: none; align-items: center; gap: 4px; height: 46px; }
 .dir-head h2 { flex: 1; margin: 0; font-size: 18px; font-weight: 600; }
 
@@ -344,15 +344,26 @@ body[data-base="plain"] #map { background: #e3e8ec; }
   .searchbox:focus-within { box-shadow: 0 0 0 2px var(--accent); }
   .searchbox .search-ic { display: none; }
   body[data-view="home"] .logo.mini { display: block; margin-inline-end: 8px; }
-  .lang-cycle { display: grid; place-items: center; min-width: 44px; height: 44px; border: 0; border-radius: 13px; background: var(--bg-soft); font-size: 13px; font-weight: 600; flex: none; }
-  body[data-view="card"] .lang-cycle, body.searching .lang-cycle { display: none; }
+  .lang-btn { display: inline-flex; align-items: center; gap: 2px; height: 44px; padding-inline: 12px 8px; border: 0; border-radius: 13px; background: var(--bg-soft);
+    font-size: 13px; font-weight: 600; flex: none; }
+  .lang-btn .ic { width: 16px; height: 16px; color: var(--muted); }
+  body[data-view="card"] .lang-btn, body.searching .lang-btn { display: none; }
+  #lang-menu { display: flex; flex-direction: column; position: absolute; z-index: 30; top: calc(100% + 8px); inset-inline-end: 0; min-width: 190px; padding: 6px;
+    background: var(--bg); border-radius: 16px; box-shadow: var(--shadow); }
+  #lang-menu button { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 0 14px; border: 0; border-radius: 11px;
+    background: none; font-size: 15.5px; text-align: start; }
+  #lang-menu button.on { background: var(--accent-soft); color: var(--accent-ink); font-weight: 600; }
+  #lang-menu button.on::after { content: ""; width: 7px; height: 13px; margin-inline-end: 4px; border: solid currentColor; border-width: 0 2.2px 2.2px 0; transform: rotate(45deg) translateY(-2px); }
   .results { margin: 0; padding: 4px 8px 8px; max-height: 60vh; border-top: 1px solid var(--line); }
   .dir-head { height: 56px; padding-inline: 6px; }
-  #sheet { position: absolute; z-index: 1000; inset-inline: 0; bottom: 0; max-height: 64vh; background: var(--bg); border-radius: 26px 26px 0 0;
-    box-shadow: 0 -8px 30px rgba(20, 33, 61, .16); transition: transform .25s ease; padding-bottom: env(safe-area-inset-bottom); }
-  body.panel-closed #sheet { transform: translateY(calc(100% - var(--peek))); }
-  #grab { display: grid; place-items: center; width: 100%; height: 26px; border: 0; background: none; flex: none; }
-  #grab span { width: 40px; height: 5px; border-radius: 3px; background: var(--line-strong); }
+  /* A drawer: dragged by its handle (or its content, from the top) between three rests -- folded to
+     a peek, half open, fully open -- which app.js places with a transform. */
+  #sheet { position: absolute; z-index: 1000; inset-inline: 0; bottom: 0; max-height: calc(100% - 84px); background: var(--bg); border-radius: 26px 26px 0 0;
+    box-shadow: 0 -8px 30px rgba(20, 33, 61, .16); transition: transform .22s ease; padding-bottom: env(safe-area-inset-bottom); will-change: transform; }
+  #sheet.dragging { transition: none; }
+  #grab { display: grid; place-items: center; width: 100%; height: 34px; border: 0; background: none; flex: none; touch-action: none; cursor: grab; }
+  #grab span { width: 44px; height: 5px; border-radius: 3px; background: var(--line-strong); }
+  #grab:active { cursor: grabbing; }
   .scroll { padding: 4px 20px 20px; }
   .phone-title { display: block; margin: 4px 0 14px; font-size: 22px; line-height: 1.2; font-weight: 600; letter-spacing: -.3px; }
   .tile .long { display: none; }
